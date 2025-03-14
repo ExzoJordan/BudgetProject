@@ -3,6 +3,10 @@
  */
 package RoadToSSE1Package;
 import java.util.Scanner;
+import java.io.PrintWriter;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.text.DecimalFormat;
 
 
@@ -17,9 +21,9 @@ public class BudgetingRule {
 	 */
 	public static void main(String[] args) {
 		Scanner scnr = new Scanner (System.in);
-		int numberOfCustomers = 10;
-		int customerID = -1;
-	    int choice = 10;
+		int numberOfCustomers = 10;//Limit on number of customers
+		int customerID = -1;//Keeps track of customer ID's
+	    int choice = 10;//Choice corresponds with a number to use program.
 	    CustomerBudget[] Customer = new CustomerBudget[numberOfCustomers];
 		
 		DecimalFormat df = new DecimalFormat ("$#.##");
@@ -27,35 +31,35 @@ public class BudgetingRule {
 		
 		
 		
-		System.out.println("Please enter a number: 1 - create a budget account \n"
-				+ "                                2 - load an account \n"
-				+ "                                3 - set a budget ");
 		
 		
 		
 		
 		//Allows multiple people to create a budgeting account.
 		while(choice != 0) {
-			choice = 10;
-			choice = scnr.nextInt();
+			
+			//Display menu
+			System.out.println("Please enter a number: 1 - create a budget account \n"
+					+ "                                2 - load an account \n"
+					+ "                                3 - set a budget ");
+			
+			choice = 10; //Resets the choice number to default.
+			choice = scnr.nextInt();//Scans next choice number for program.
 			
 			switch(choice) {
 			
-			//Case 1 will allow you to create an account
+			//Case 1 will allow you to create an account.
 			case 1: 
-				choice = 10;
-				
+							
 				customerID++;
-				System.out.println("Your customer ID is:" + customerID);
+				
 				
 				
 					
 					Customer[customerID] = new CustomerBudget();
+					System.out.println("Your customer ID is:" + customerID);
+					Customer[customerID].createAccount();
 					
-					//Get Customer Name
-					System.out.println("Please enter your name: ");
-					Customer[customerID].setName(scnr.next());
-					System.out.println("You're name is: " + Customer[customerID].getName());
 					
 					
 					
@@ -67,7 +71,7 @@ public class BudgetingRule {
 			
 			break;
 			
-			//Case 2 will load an account
+			//Case 2 will load an account.
 			case 2:
 				
 				System.out.println("Please enter your customer ID: ");
@@ -76,59 +80,10 @@ public class BudgetingRule {
 			
 			break;
 			
-			//Case 3 will set the budget
+			//Case 3 will set the budget.
 			case 3:
-				
-				//Monthly Income Prompt
-				System.out.print("Please Input your income for this month: ");
-				
-				//Store Monthly Income
-				Customer[customerID].setMonthlyIncome(scnr.nextDouble());
-				
-				System.out.println("Monthly income is:  " + df.format(Customer[customerID].getMonthlyIncome()) + "\n");
-				
-				//Set the budget. resets if the percentages doesn't add up to 1
-				while (Customer[customerID].checkBudget() == false) {
-					
-					//Resets budgets if done incorrectly
-					Customer[customerID].setNeedsBudget(0);
-					Customer[customerID].setWantsBudget(0);
-					Customer[customerID].setSavingsBudget(0);
-					
-					System.out.println("Enter needs percentage");
-					Customer[customerID].setNeedsBudget(scnr.nextDouble()); //User inputs needs budget percentage
-					
-					System.out.println("Enter wants percentage");
-					Customer[customerID].setWantsBudget(scnr.nextDouble()); //User inputs wants budget percentage
-					
-					System.out.println("Enter savings percentage");
-					Customer[customerID].setSavingsBudget(scnr.nextDouble()); //User inputs savings budget percentage
-					
-					//Checks if the percentages adds up to 1
-					if (Customer[customerID].checkBudget() == true) {
-						System.out.println("Checking budget... \n");
-						
-						try {
-							Thread.sleep(2000);//Timer
-						}
-						catch (InterruptedException e)
-						{
-						e.printStackTrace();	
-						}
-						
-						System.out.println("Budget created!!");
-					}
-					else {
-						System.out.println("Checking budget... \n");				
-						try {
-							Thread.sleep(1000);//Timer
-						}
-						catch (InterruptedException e) {
-						e.printStackTrace();	
-						}
-						System.out.println("Budget Unsuccessful. Percentages must equal to 1 \n");
-					}
-				}
+							
+				Customer[customerID].setBudget();
 				
 				//Calculate budget with monthly income
 				Customer[customerID].calculateBudget();
@@ -144,6 +99,13 @@ public class BudgetingRule {
 		
 			break;
 			
+			//Checks the budget on the account
+			case 4:
+			
+				System.out.println(Customer[customerID].toString());
+				
+			break;
+			
 			default:
 			
 			break;
@@ -151,8 +113,27 @@ public class BudgetingRule {
 			
 			}
 		}
+		try  {
 		
+		PrintWriter writer = new PrintWriter("Budget.txt");
 		
+		for(int i = 0; i <= customerID; i++) {
+			
+			
+				
+				
+				writer.println(Customer[i].getName());
+				writer.println(Customer[i].getNeedsBudget());
+				writer.println(Customer[i].getWantsBudget());
+				writer.println(Customer[i].getSavingsBudget());
+				
+				System.out.println("Data saved");
+		}
+		writer.close();	
+		}	
+			catch (IOException e) {
+				System.out.println("Error writting file");
+			}
 		
 		
 		

@@ -16,6 +16,7 @@ import java.util.Scanner;
 public class CustomerBudget {
 	
 	DecimalFormat df = new DecimalFormat ("$#.##");
+	Scanner scnr = new Scanner (System.in);
 	
 	double monthlyIncome; //Monthly income of user.
 	double needsBudgetPercentage; //Percent of needs budget.
@@ -75,6 +76,69 @@ public void setSavingsBudget (double savingsBudget) {
 		this.savingsBudgetPercentage = savingsBudget;
 }
 
+public void createAccount () {
+	
+	//Get Customer Name.
+	System.out.println("Please enter your name: ");
+	this.setName(scnr.next());
+	System.out.println("You're name is: " + this.getName());
+}
+
+public void setBudget () {
+	
+	//Monthly Income Prompt
+	System.out.print("Please Input your income for this month: ");
+	
+	//Store Monthly Income.
+	this.setMonthlyIncome(scnr.nextDouble());
+	
+	System.out.println("Monthly income is:  " + df.format(this.getMonthlyIncome()) + "\n");
+	
+	//Set the budget. resets if the percentages doesn't add up to 1.
+	while (this.checkBudget() == false) {
+		
+		//Resets budgets if done incorrectly.
+		this.setNeedsBudget(0);
+		this.setWantsBudget(0);
+		this.setSavingsBudget(0);
+		
+		System.out.println("Enter needs percentage");
+		this.setNeedsBudget(scnr.nextDouble()); //User inputs needs budget percentage
+		
+		System.out.println("Enter wants percentage");
+		this.setWantsBudget(scnr.nextDouble()); //User inputs wants budget percentage
+		
+		System.out.println("Enter savings percentage");
+		this.setSavingsBudget(scnr.nextDouble()); //User inputs savings budget percentage
+		
+		//Checks if the percentages adds up to 1
+		if (this.checkBudget() == true) {
+			System.out.println("Checking budget... \n");
+			
+			try {
+				Thread.sleep(2000);//Timer
+			}
+			catch (InterruptedException e)
+			{
+			e.printStackTrace();	
+			}
+			
+			System.out.println("Budget created!!");
+		}
+		else {
+			System.out.println("Checking budget... \n");				
+			try {
+				Thread.sleep(1000);//Timer
+			}
+			catch (InterruptedException e) {
+			e.printStackTrace();	
+			}
+			System.out.println("Budget Unsuccessful. Percentages must equal to 1 \n");
+		}
+	}
+	
+}
+
 //GETTERS
 
 /**
@@ -95,6 +159,17 @@ public double getMonthlyIncome() {
 	return monthlyIncome;
 }
 
+public double getNeedsBudget() {
+	return needsBudget;
+}
+
+public double getWantsBudget() {
+	return wantsBudget;
+}
+
+public double getSavingsBudget() {
+	return savingsBudget;
+}
 //BOOLEAN
 
 /**
