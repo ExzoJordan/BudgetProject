@@ -50,11 +50,39 @@ public void setMonthlyIncome( double monthlyIncome) {
 }
 
 /**
+ * Sets the needs budget amount.
+ * 
+ * @param needsBudget
+ */
+public void setNeedsBudget(double needsBudget) {
+	this.needsBudget = needsBudget;
+}
+
+/**
+ * Sets the wants budget amount.
+ * 
+ * @param wantsBudget
+ */
+public void setWantsBudget(double wantsBudget) {
+	this.wantsBudget = wantsBudget;
+}
+
+/**
+ * Sets the savings budget amount.
+ * 
+ * @param savingsBudget
+ */
+public void setSavingsBudget(double savingsBudget) {
+	this.savingsBudget = savingsBudget;
+}
+
+
+/**
  * Sets the needs percentage budget.
  * 
  * @param needsBudget The needs percentage budget.
  */
-public void setNeedsBudget (double needsBudget) {
+public void setNeedsBudgetPercentage (double needsBudget) {
 	this.needsBudgetPercentage = needsBudget;
 }
 
@@ -63,7 +91,7 @@ public void setNeedsBudget (double needsBudget) {
  * 
  * @param wantsBudget The wants percentage budget.
  */
-public void setWantsBudget (double wantsBudget) {		
+public void setWantsBudgetPercentage (double wantsBudget) {		
 		this.wantsBudgetPercentage = wantsBudget;		
 }
 
@@ -72,7 +100,7 @@ public void setWantsBudget (double wantsBudget) {
  * 
  * @param savingsBudget The savings percentage budget
  */
-public void setSavingsBudget (double savingsBudget) {
+public void setSavingsBudgetPercentage (double savingsBudget) {
 		this.savingsBudgetPercentage = savingsBudget;
 }
 
@@ -83,7 +111,9 @@ public void createAccount () {
 	this.setName(scnr.next());
 	System.out.println("You're name is: " + this.getName());
 }
-
+/**
+ * Allows user to set budget percentages 
+ */
 public void setBudget () {
 	
 	//Monthly Income Prompt
@@ -98,18 +128,18 @@ public void setBudget () {
 	while (this.checkBudget() == false) {
 		
 		//Resets budgets if done incorrectly.
-		this.setNeedsBudget(0);
-		this.setWantsBudget(0);
-		this.setSavingsBudget(0);
+		this.setNeedsBudgetPercentage(0);
+		this.setWantsBudgetPercentage(0);
+		this.setSavingsBudgetPercentage(0);
 		
 		System.out.println("Enter needs percentage");
-		this.setNeedsBudget(scnr.nextDouble()); //User inputs needs budget percentage
+		this.setNeedsBudgetPercentage(scnr.nextDouble()); //User inputs needs budget percentage
 		
 		System.out.println("Enter wants percentage");
-		this.setWantsBudget(scnr.nextDouble()); //User inputs wants budget percentage
+		this.setWantsBudgetPercentage(scnr.nextDouble()); //User inputs wants budget percentage
 		
 		System.out.println("Enter savings percentage");
-		this.setSavingsBudget(scnr.nextDouble()); //User inputs savings budget percentage
+		this.setSavingsBudgetPercentage(scnr.nextDouble()); //User inputs savings budget percentage
 		
 		//Checks if the percentages adds up to 1
 		if (this.checkBudget() == true) {
@@ -158,15 +188,30 @@ public String getName() {
 public double getMonthlyIncome() {	
 	return monthlyIncome;
 }
-
+/**
+ * Gets the needs budget amount.
+ * 
+ * @return needs budget amount.
+ */
 public double getNeedsBudget() {
 	return needsBudget;
 }
 
+/**
+ * Gets the wants budget amount.
+ * 
+ * @return wants budget amount.
+ */
 public double getWantsBudget() {
 	return wantsBudget;
 }
 
+
+/**
+ * Gets the savings budget amount.
+ * 
+ * @return savings budget amount.
+ */
 public double getSavingsBudget() {
 	return savingsBudget;
 }
